@@ -1,0 +1,56 @@
+# Produção: aplicação + PostgreSQL + Caddy (HTTPS automático com Let's Encrypt).
+# No servidor:  docker compose -f docker-compose.prod.yml up -d --build
+# As senhas e o domínio vêm do arquivo .env (copie de .env.exemplo).
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      ConnectionStrings__Clinica: "Host=db;Port=5432;Database=clinica;Username=clinica;Password=${DB_SENHA}"
+      Banco__Provedor: Postgres
+      Banco__DadosDeExemplo: "false"
+      Jwt__Chave: ${JWT_CHAVE}
+      Admin__Nome: ${ADMIN_NOME:-Administrador}
+      Admin__Email: ${ADMIN_EMAIL}
+      Admin__Senha: ${ADMIN_SENHA}
+    volumes:
+      - fotos:/dados/fotos
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: clinica
+      POSTGRES_PASSWORD: ${DB_SENHA}
+      POSTGRES_DB: clinica
+    volumes:
+      - banco:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clinica"]
+      interval: 5s
+      retries: 10
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMINIO: ${DOMINIO}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_dados:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  banco:
+  fotos:
+  caddy_dados:
+  caddy_config:

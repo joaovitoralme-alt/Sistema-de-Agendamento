@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Validação de tokens JWT ("Authorization: Bearer ..."). -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clinica.Application\Clinica.Application.csproj" />
+    <ProjectReference Include="..\Clinica.Infrastructure\Clinica.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Fotos enviadas pelo painel ficam fora do código e não vão para o publish. -->
+    <Content Remove="dados\**" />
+    <None Remove="dados\**" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+# O Caddy recebe as visitas, gera e renova o certificado HTTPS sozinho
+# e repassa tudo para a aplicação. O domínio vem do .env (DOMINIO).
+{$DOMINIO} {
+	encode gzip
+	reverse_proxy app:8080
+}

@@ -1,0 +1,10 @@
+**/bin
+**/obj
+**/.vs
+**/node_modules
+**/dados
+**/*.user
+**/*.tgz
+Backend/src/Clinica.Api/wwwroot
+Backend/src/Clinica.Api/appsettings.Development.json
+.env

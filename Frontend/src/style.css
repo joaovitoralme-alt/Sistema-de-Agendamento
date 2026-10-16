@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* Identidade visual (cores e fontes tiradas do logo). Para outra clínica, troque só este bloco. */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-titulo: "Playfair Display", ui-serif, Georgia, serif;
+
+  --color-creme: #fff8f2;    /* fundo das páginas */
+  --color-areia: #fdeadb;    /* fundos de destaque suaves */
+  --color-pessego: #ffdec2;  /* a cor clara do logo */
+
+  /* Vinho do logo (#6f0132) e seus tons. */
+  --color-marca-50: #fcf3f5;
+  --color-marca-100: #f7e1e8;
+  --color-marca-200: #eebfce;
+  --color-marca-300: #dd8fa9;
+  --color-marca-400: #b84a74;
+  --color-marca-500: #6f0132;
+  --color-marca-600: #5c0129;
+  --color-marca-700: #480120;
+
+  --color-tinta: #2e0f1b;    /* texto principal */
+}
+
+@layer base {
+  body {
+    @apply bg-creme text-tinta font-sans antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-titulo;
+  }
+}
+
+/* Classes reutilizáveis (botões, campos, cartões). */
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition
+      disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+@utility btn-primario {
+    @apply btn bg-marca-500 text-white hover:bg-marca-600;
+}
+
+@utility btn-secundario {
+    @apply btn border border-marca-200 bg-white text-marca-700 hover:bg-marca-50;
+}
+
+@utility btn-perigo {
+    @apply btn border border-red-200 bg-white text-red-700 hover:bg-red-50;
+}
+
+@utility btn-pequeno {
+    @apply px-3! py-1.5! text-xs!;
+}
+
+@utility campo {
+    @apply w-full rounded-xl border border-stone-300 bg-white px-3.5 py-2.5 text-sm outline-none transition
+      focus:border-marca-400 focus:ring-2 focus:ring-marca-100;
+}
+
+@utility rotulo {
+    @apply mb-1.5 block text-sm font-medium text-stone-700;
+}
+
+@utility cartao {
+    @apply rounded-2xl border border-stone-200 bg-white p-5 shadow-sm;
+}

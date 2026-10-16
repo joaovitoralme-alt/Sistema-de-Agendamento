@@ -1,0 +1,16 @@
+# Sobe um PostgreSQL local para desenvolvimento:  docker compose up -d
+# Depois, em appsettings.Development.json, troque "Provedor" de "Memoria" para "Postgres".
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: clinica
+    ports:
+      - "5432:5432"
+    volumes:
+      - dados-postgres:/var/lib/postgresql/data
+
+volumes:
+  dados-postgres:
